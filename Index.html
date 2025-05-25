@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PvP Stats</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: #1e1e1e;
+      color: #e0f7fa;
+      font-family: 'Press Start 2P', cursive;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #00e5ff;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 18px; /* Título más pequeño */
+    }
+
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 12px;
+      text-align: center;
+      background-color: #2a2a2a;
+      color: #e0f7fa;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #00bcd4;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    #result-box {
+      background-color: #2a2a2a;
+      border-radius: 10px;
+      padding: 20px;
+      width: 100%;
+      max-width: 400px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #result-box p {
+      font-size: 10px; /* Texto de resultados más pequeño */
+      margin: 6px 0;
+    }
+
+    table {
+      margin-top: 30px;
+      border-collapse: collapse;
+      width: 95%;
+      max-width: 700px;
+    }
+
+    th, td {
+      border: 1px solid #00acc1;
+      padding: 8px;
+      font-size: 10px;
+    }
+
+    th {
+      background-color: #007c91;
+      color: white;
+    }
+
+    td {
+      background-color: #1c1c1c;
+      color: #e0f7fa;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 10px;
+      color: #bbb;
+      text-align: center;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>[PvP Stats]</h1>
+
+  <div class="input-container">
+    <input type="number" id="games" placeholder="Games Played/Partidas Juagadas" />
+    <input type="number" id="wins" placeholder="Wins/Victorias" />
+    <input type="number" id="kills" placeholder="Kills/Asesinatos" />
+    <input type="number" id="deaths" placeholder="Deaths/Derrotas" />
+    <button onclick="calcular()">Calcular/calculate</button>
+  </div>
+
+  <div id="result-box">
+    <p id="resultado-kd">Here your result will be displayed<br><br>Acá se mostratá tu resultado</p>
+    <p id="posicion-kd"></p>
+    <p id="resultado-winrate"></p>
+    <p id="posicion-winrate"></p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Rango</th><th>K/D</th><th>Winrate</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>zzz</td><td>&lt; 0.5</td><td>&lt; 20%</td></tr>
+      <tr><td>Ez</td><td>&lt; 1.0</td><td>&lt; 30%</td></tr>
+      <tr><td>Beginner</td><td>&lt; 1.5</td><td>&lt; 40%</td></tr>
+      <tr><td>Noob</td><td>&lt; 2.0</td><td>&lt; 50%</td></tr>
+      <tr><td>Competent</td><td>&lt; 2.5</td><td>&lt; 55%</td></tr>
+      <tr><td>Regular</td><td>&lt; 3.0</td><td>&lt; 60%</td></tr>
+      <tr><td>Veteran</td><td>&lt; 3.5</td><td>&lt; 65%</td></tr>
+      <tr><td>Rush</td><td>&lt; 4.0</td><td>&lt; 70%</td></tr>
+      <tr><td>Élite</td><td>&lt; 4.5</td><td>&lt; 75%</td></tr>
+      <tr><td>Pro</td><td>&lt; 5.0</td><td>&lt; 80%</td></tr>
+      <tr><td>Master</td><td>&lt; 6.0</td><td>&lt; 85%</td></tr>
+      <tr><td>Legend</td><td>&lt; 7.0</td><td>&lt; 90%</td></tr>
+      <tr><td>GOD</td><td>7.0+</td><td>90%+</td></tr>
+    </tbody>
+  </table>
+
+  <footer>By Famoso pitiki<br>©Todo los derechos reservados| 2025
+  </footer>
+
+  <script>
+    function getPosicionKD(kd) {
+      if (kd < 0.5) return "zzz";
+      if (kd < 1.0) return "Ez";
+      if (kd < 1.5) return "Beginner";
+      if (kd < 2.0) return "noob";
+      if (kd < 2.5) return "Competent";
+      if (kd < 3.0) return "Regular";
+      if (kd < 3.5) return "Veteran";
+      if (kd < 4.0) return "Rush";
+      if (kd < 4.5) return "Élite";
+      if (kd < 5.0) return "Pro";
+      if (kd < 6.0) return "Master";
+      if (kd < 7.0) return "Legend";
+      return "GOD";
+    }
+
+    function getPosicionWinrate(winrate) {
+      if (winrate < 20) return "zzz";
+      if (winrate < 30) return "Ez";
+      if (winrate < 40) return "Beginner";
+      if (winrate < 50) return "Noob";
+      if (winrate < 55) return "Competent";
+      if (winrate < 60) return "Regular";
+      if (winrate < 65) return "Veteran";
+      if (winrate < 70) return "Rush";
+      if (winrate < 75) return "Élite";
+      if (winrate < 80) return "Pro";
+      if (winrate < 85) return "Master";
+      if (winrate < 90) return "Legend";
+      return "GOD";
+    }
+
+    function calcular() {
+      const games = Number(document.getElementById("games").value);
+      const wins = Number(document.getElementById("wins").value);
+      const kills = Number(document.getElementById("kills").value);
+      const deaths = Number(document.getElementById("deaths").value);
+
+      if (games <= 0 || wins < 0 || kills < 0 || deaths < 0 || wins > games) {
+        alert("Por favor, ingresa valores válidos.");
+        return;
+      }
+
+      const kd = deaths === 0 ? kills : kills / deaths;
+      const winrate = (wins / games) * 100;
+
+      document.getElementById("resultado-kd").textContent = `K/D Ratio: ${kd.toFixed(2)}`;
+      document.getElementById("posicion-kd").textContent = `Posición: ${getPosicionKD(kd)}`;
+      document.getElementById("resultado-winrate").textContent = `Winrate: ${winrate.toFixed(2)}%`;
+      document.getElementById("posicion-winrate").textContent = `Posición: ${getPosicionWinrate(winrate)}`;
+    }
+  </script>
+</body>
+</html>
